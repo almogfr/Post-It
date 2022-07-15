@@ -39,8 +39,6 @@ public class FeedAdapter extends BaseAdapter {
         return 0;
     }
 
-    // ...
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -60,8 +58,10 @@ public class FeedAdapter extends BaseAdapter {
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         viewHolder.name.setText(p.getName());
         viewHolder.when.setText(p.getWhenPosted());
-        viewHolder.profile.setImageResource(p.getProfileImage());
-        viewHolder.img.setImageResource(p.getImg());
+//        viewHolder.profile.setImageResource(p.getProfileImage());
+        new ImageDownloader(p.getProfileImage(), viewHolder.profile).execute();
+        new ImageDownloader(p.getImgUrl(), viewHolder.img).execute();
+//        viewHolder.img.setImageResource(p.getImgUrl());
 
         viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
