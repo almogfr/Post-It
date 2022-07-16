@@ -5,11 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
 
     <ListView
         android:id="@+id/lstFeed"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="637dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="-1dp"
+        android:layout_marginBottom="39dp"
         android:dividerHeight="5dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,7 +26,10 @@
         android:layout_alignRight="@id/lstFeed"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:srcCompat="@drawable/ic_plus_24" />
 
     <ProgressBar
