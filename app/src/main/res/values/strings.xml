@@ -14,4 +14,17 @@
     <string name="comment">Comment</string>
     <string name="like">Like</string>
     <string name="share">Share</string>
+
+    //Headers Onboarding
+    <string name="heading_one">Quick &amp; Easy Upload Post</string>
+    <string name="heading_two">Check your profile</string>
+    <string name="heading_three">Go over new Posts</string>
+    <string name="heading_fourth">Like &amp; Comment on Posts</string>
+
+    //Description Onboarding
+    <string name="desc_one">Upload new posts and share your moments with your friends</string>
+    <string name="desc_two">Update your profile details</string>
+    <string name="desc_three">Check out new posts in your feed</string>
+    <string name="desc_fourth">Add comments and likes to post you love</string>
+
 </resources>
