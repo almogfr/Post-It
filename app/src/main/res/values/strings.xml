@@ -15,6 +15,10 @@
     <string name="like">Like</string>
     <string name="share">Share</string>
 
+    <string name="DbName">PostsDB</string>
+    <string name="PostsUrl">http://10.0.2.2:5001/api/posts/</string>
+    <string name="BaseUrl">http://10.0.2.2:5001/api/</string>
+
     //Headers Onboarding
     <string name="heading_one">Quick &amp; Easy Upload Post</string>
     <string name="heading_two">Check your profile</string>

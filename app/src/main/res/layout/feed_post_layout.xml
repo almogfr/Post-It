@@ -52,6 +52,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/feed_post_profile_img" />
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="@+id/feed_post_img"
+        app:layout_constraintStart_toStartOf="@+id/feed_post_img"
+        app:layout_constraintTop_toTopOf="@+id/feed_post_img"
+        app:layout_constraintBottom_toBottomOf="@+id/feed_post_img"/>
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"

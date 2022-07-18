@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -23,7 +24,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.postit.entities.Post;
+import com.example.postit.viewmodels.PostsViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -56,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private Uri mImageUri;
     private FeedAdapter feedAdapter;
+    private PostsViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,47 +78,26 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress);
         progressBar.setVisibility(View.VISIBLE);
 
-//        ArrayList personImages = new ArrayList<>(Arrays.asList(
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_background,
-//                R.drawable.ic_launcher_foreground,
-//                R.mipmap.ic_launcher,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_background,
-//                R.drawable.ic_launcher_foreground,
-//                R.mipmap.ic_launcher,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_background,
-//                R.drawable.ic_launcher_foreground,
-//                R.mipmap.ic_launcher,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground));
         url = database.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference().child("/" + userUid + "/");
 
 
-        ListView lstFeed = (ListView) findViewById(R.id.lstFeed);
-//        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        viewModel = new ViewModelProvider(this).get(PostsViewModel.class);
+        RecyclerView lstFeed = (RecyclerView) findViewById(R.id.lstFeed);
 
-//        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, Images);
         posts = generatePosts();
-        feedAdapter = new FeedAdapter(posts);
+        feedAdapter = new FeedAdapter(this);
         lstFeed.setAdapter(feedAdapter);
+        lstFeed.setLayoutManager(new LinearLayoutManager(this));
 
-        lstFeed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Post p = posts.get(position);
-                p.select();
-                feedAdapter.notifyDataSetChanged();
-            }
-        });
+//        lstFeed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Post p = posts.get(position);
+//                p.select();
+//                feedAdapter.notifyDataSetChanged();
+//            }
+//        });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
@@ -120,6 +107,18 @@ public class MainActivity extends AppCompatActivity {
                 selectImage();
             }
         });
+
+        SwipeRefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(() -> {
+            viewModel.reload();
+        });
+
+        viewModel.get().observe(this, posts -> {
+            feedAdapter.setPosts(posts);
+            refreshLayout.setRefreshing(false);
+        });
+
+
     }
 
     private List<Post> generatePosts(){
@@ -135,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
                                     // adding the url in the arraylist
                                     String url = uri.toString();
                                     Images.add(url);
-                                    posts.add(new Post("test", "now", url, url));
+                                    Post post = new Post("test", "now", url, url);
+                                    posts.add(post);
+                                    AsyncTask.execute(() -> viewModel.add(post));
                                     feedAdapter.notifyDataSetChanged();
                                     Log.e("Itemvalue", uri.toString());
                                 }
