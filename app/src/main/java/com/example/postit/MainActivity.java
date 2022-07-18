@@ -17,12 +17,15 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -67,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         super.onCreate(savedInstanceState);
 //        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences sharedPreferences = getSharedPreferences("myfile", MODE_PRIVATE);
@@ -78,6 +84,35 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress);
         progressBar.setVisibility(View.VISIBLE);
 
+        ImageButton image = findViewById(R.id.BackButton);
+        image.setVisibility(View.GONE);
+
+        ImageButton settings = findViewById(R.id.SettingsButton);
+        settings.setVisibility(View.VISIBLE);
+
+        TextView Appname = findViewById(R.id.appname);
+        Appname.setVisibility(View.VISIBLE);
+
+//        ArrayList personImages = new ArrayList<>(Arrays.asList(
+//                R.drawable.ic_launcher_foreground,
+//                R.drawable.ic_launcher_background,
+//                R.drawable.ic_launcher_foreground,
+//                R.mipmap.ic_launcher,
+//                R.drawable.ic_launcher_foreground,
+//                R.drawable.ic_launcher_foreground,
+//                R.drawable.ic_launcher_foreground,
+//                R.drawable.ic_launcher_background,
+//                R.drawable.ic_launcher_foreground,
+//                R.mipmap.ic_launcher,
+//                R.drawable.ic_launcher_foreground,
+//                R.drawable.ic_launcher_foreground,
+//                R.drawable.ic_launcher_foreground,
+//                R.drawable.ic_launcher_background,
+//                R.drawable.ic_launcher_foreground,
+//                R.mipmap.ic_launcher,
+//                R.drawable.ic_launcher_foreground,
+//                R.drawable.ic_launcher_foreground,
+//                R.drawable.ic_launcher_foreground));
         url = database.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference().child("/" + userUid + "/");
 
@@ -119,6 +154,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+        ImageButton prfilePageButton = (ImageButton) findViewById(R.id.ProfileButton);
+        prfilePageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ProfilePageActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private List<Post> generatePosts(){
@@ -248,5 +292,9 @@ public class MainActivity extends AppCompatActivity {
     private File createTemporaryFile(String part, String ext) throws Exception
     {
         return File.createTempFile(part, ext, getCacheDir());
+    }
+
+    public void onClick(View v) {
+
     }
 }
