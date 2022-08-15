@@ -155,11 +155,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        ImageButton prfilePageButton = (ImageButton) findViewById(R.id.ProfileButton);
-        prfilePageButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton profilePageButton = (ImageButton) findViewById(R.id.ProfileButton);
+        profilePageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ProfilePageActivity.class);
+                startActivity(intent);
+            }
+        });
+        ImageButton settingsPageButton = (ImageButton) findViewById(R.id.SettingsButton);
+        settingsPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
         });
