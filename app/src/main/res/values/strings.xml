@@ -30,5 +30,6 @@
     <string name="desc_two">Update your profile details</string>
     <string name="desc_three">Check out new posts in your feed</string>
     <string name="desc_fourth">Add comments and likes to post you love</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

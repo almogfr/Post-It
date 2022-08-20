@@ -15,9 +15,11 @@
         <entry key="app/src/main/res/layout/activity_onboarding_slider_layout.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.19583333333333333" />
-        <entry key="app/src/main/res/layout/feed_post_layout.xml" value="0.10208333333333333" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.20989583333333334" />
+        <entry key="app/src/main/res/layout/feed_post_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/image_card.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/onboarding_slider_layout.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/text.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.22" />
       </map>
     </option>
