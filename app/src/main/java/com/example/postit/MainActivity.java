@@ -92,29 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
         TextView Appname = findViewById(R.id.appname);
         Appname.setVisibility(View.VISIBLE);
-
-//        ArrayList personImages = new ArrayList<>(Arrays.asList(
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_background,
-//                R.drawable.ic_launcher_foreground,
-//                R.mipmap.ic_launcher,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_background,
-//                R.drawable.ic_launcher_foreground,
-//                R.mipmap.ic_launcher,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_background,
-//                R.drawable.ic_launcher_foreground,
-//                R.mipmap.ic_launcher,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground,
-//                R.drawable.ic_launcher_foreground));
         url = database.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference().child("/" + userUid + "/");
+        storageReference = FirebaseStorage.getInstance().getReference().child("/" + FirebaseUtils.getCurrentUserid() + "/");
 
 
         viewModel = new ViewModelProvider(this).get(PostsViewModel.class);
@@ -124,15 +103,6 @@ public class MainActivity extends AppCompatActivity {
         feedAdapter = new FeedAdapter(this);
         lstFeed.setAdapter(feedAdapter);
         lstFeed.setLayoutManager(new LinearLayoutManager(this));
-
-//        lstFeed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Post p = posts.get(position);
-//                p.select();
-//                feedAdapter.notifyDataSetChanged();
-//            }
-//        });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
@@ -154,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         ImageButton prfilePageButton = (ImageButton) findViewById(R.id.ProfileButton);
         prfilePageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private List<Post> generatePosts(){
+    private List<Post> generatePosts() {
         List<Post> posts = new ArrayList<>();
         storageReference.listAll()
                 .addOnSuccessListener(new OnSuccessListener<ListResult>() {
@@ -178,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                                     // adding the url in the arraylist
                                     String url = uri.toString();
                                     Images.add(url);
-                                    Post post = new Post("test", "now", url, url);
+                                    Post post = new Post("test", "now", url, url, FirebaseUtils.getCurrentUserid());
                                     posts.add(post);
                                     AsyncTask.execute(() -> viewModel.add(post));
                                     feedAdapter.notifyDataSetChanged();
@@ -201,45 +170,47 @@ public class MainActivity extends AppCompatActivity {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo")) {
-                    if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-                    } else {
-                        File photo = null;
-                        try
-                        {
-                            // place where to store camera taken picture
-                            photo = createTemporaryFile("picture", ".png");
-                            photo.delete();
-                        }
-                        catch(Exception e)
-                        {
-                            Toast.makeText(getApplicationContext(), "Please check SD card! Image shot is impossible!", Toast.LENGTH_SHORT).show();
-                        }
-                        mImageUri = FileProvider.getUriForFile(getBaseContext(), getBaseContext().getApplicationContext().getPackageName() + ".provider", photo);
-                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
-                        try {
-                            startActivityForResult(takePictureIntent, 1);
-                        } catch (ActivityNotFoundException e) {
-                            // display error state to the user
-                        }
-
-                    }
-
-                } else if (options[item].equals("Choose from Gallery")) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 1);
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
+        builder.setItems(options, (dialog, item) -> {
+            if (options[item].equals("Take Photo")) {
+                openCam();
+            }
+            else if (options[item].equals("Choose from Gallery")) {
+                openGallery();
+            }
+            else if (options[item].equals("Cancel")) {
+                dialog.dismiss();
             }
         });
         builder.show();
+    }
+
+    private void openGallery(){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 1);
+    }
+
+    private void openCam(){
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+        } else {
+            File photo = null;
+            try {
+                // place where to store camera taken picture
+                photo = createTemporaryFile("picture", ".png");
+                photo.delete();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Please check SD card! Image shot is impossible!", Toast.LENGTH_SHORT).show();
+            }
+            mImageUri = FileProvider.getUriForFile(getBaseContext(), getBaseContext().getApplicationContext().getPackageName() + ".provider", photo);
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+            try {
+                startActivityForResult(takePictureIntent, 1);
+            } catch (ActivityNotFoundException e) {
+                // display error state to the user
+            }
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -289,12 +260,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private File createTemporaryFile(String part, String ext) throws Exception
-    {
+    private File createTemporaryFile(String part, String ext) throws Exception {
         return File.createTempFile(part, ext, getCacheDir());
-    }
-
-    public void onClick(View v) {
-
     }
 }

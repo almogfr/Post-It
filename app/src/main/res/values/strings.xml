@@ -16,7 +16,7 @@
     <string name="share">Share</string>
 
     <string name="DbName">PostsDB</string>
-    <string name="PostsUrl">http://10.0.2.2:5001/api/posts/</string>
+    <string name="PostsUrl">https://postit-cfab0.firebaseio.com/posts/</string>
     <string name="BaseUrl">http://10.0.2.2:5001/api/</string>
 
     //Headers Onboarding

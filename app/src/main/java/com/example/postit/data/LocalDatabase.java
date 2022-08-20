@@ -19,7 +19,7 @@ public abstract class LocalDatabase extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(MyApplication.context.getApplicationContext(),
                                             LocalDatabase.class,
-                                            MyApplication.context.getString(R.string.DbName)).build();
+                                            MyApplication.context.getString(R.string.DbName)).fallbackToDestructiveMigration().build();
         }
         return instance;
     }

@@ -3,7 +3,9 @@ package com.example.postit;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -13,10 +15,17 @@ class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
     private String host;
     private ImageView imageView;
+    private ProgressBar progress;
 
     public ImageDownloader(String host, ImageView imageView) {
         this.host = host;
         this.imageView = imageView;
+    }
+
+    public ImageDownloader(String host, ImageView imageView, ProgressBar progress) {
+        this.host = host;
+        this.imageView = imageView;
+        this.progress = progress;
     }
 
     @Override
@@ -43,6 +52,9 @@ class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
+            if(progress != null) {
+                progress.setVisibility(View.GONE);
+            }
         }
     }
 

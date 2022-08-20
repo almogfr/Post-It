@@ -12,11 +12,12 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/refreshLayout">
+        android:id="@+id/refreshLayout"
+        android:layout_below="@+id/toolbar">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lstFeed"
         android:layout_width="match_parent"
-        android:layout_height="637dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="-1dp"

@@ -13,12 +13,14 @@ public class Post {
     private String profileImage;
     private String imgUrl;
     private int likes;
+    private String user_id;
 
-    public Post(String name, String whenPosted, String profileImage, String imgUrl) {
+    public Post(String name, String whenPosted, String profileImage, String imgUrl, String user_id) {
         this.name = name;
         this.whenPosted = whenPosted;
         this.profileImage = profileImage;
         this.imgUrl = imgUrl;
+        this.user_id = user_id;
     }
 
     public void setId(int id) {
@@ -27,6 +29,10 @@ public class Post {
 
     public void setWhenPosted(String whenPosted) {
         this.whenPosted = whenPosted;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public void setName(String name) {
@@ -67,6 +73,10 @@ public class Post {
 
     public int getLikes() {
         return likes;
+    }
+
+    public String getUser_id() {
+        return user_id;
     }
 
     public void select() {

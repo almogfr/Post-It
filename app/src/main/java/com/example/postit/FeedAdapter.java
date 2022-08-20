@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder
         TextView when;
         ImageView profile;
         ImageView img;
+        ProgressBar progress;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -30,6 +32,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder
             when = itemView.findViewById(R.id.feed_post_when);
             profile = itemView.findViewById(R.id.feed_post_profile_img);
             img = itemView.findViewById(R.id.feed_post_img);
+            progress = itemView.findViewById(R.id.progress);
         }
     }
 
@@ -53,8 +56,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder
             final Post current = posts.get(position);
             holder.name.setText(current.getName());
             holder.when.setText(current.getWhenPosted());
-            new ImageDownloader(current.getProfileImage(), holder.profile);
-            new ImageDownloader(current.getImgUrl(), holder.img);
+            new ImageDownloader(current.getProfileImage(), holder.profile).execute();
+            new ImageDownloader(current.getImgUrl(), holder.img, holder.progress).execute();
         }
     }
 
@@ -64,8 +67,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder
     }
 
     @Override
-    public long getItemId(int i) {
-        return 0;
+    public long getItemId(int position) {
+
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -76,40 +85,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder
     }
 
     public List<Post> getPosts() {
+
         return posts;
     }
 
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        if (convertView == null) {
-//            convertView = LayoutInflater.from(parent.getContext())
-//                    .inflate(R.layout.feed_post_layout, parent, false);
-//
-//            ViewHolder viewHolder = new ViewHolder();
-//            viewHolder.name = convertView.findViewById(R.id.feed_post_name);
-//            viewHolder.when = convertView.findViewById(R.id.feed_post_when);
-//            viewHolder.profile = convertView.findViewById(R.id.feed_post_profile_img);
-//            viewHolder.img = convertView.findViewById(R.id.feed_post_img);
-//
-//            convertView.setTag(viewHolder);
-//        }
-//
-//        Post p = posts.get(position);
-//        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-//        viewHolder.name.setText(p.getName());
-//        viewHolder.when.setText(p.getWhenPosted());
-////        viewHolder.profile.setImageResource(p.getProfileImage());
-//        new ImageDownloader(p.getProfileImage(), viewHolder.profile).execute();
-//        new ImageDownloader(p.getImgUrl(), viewHolder.img).execute();
-////        viewHolder.img.setImageResource(p.getImgUrl());
-//
-//        viewHolder.img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(v.getContext(), "Clicked on image", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        return convertView;
-//    }
 }
