@@ -2,6 +2,7 @@ package com.example.postit;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -27,6 +28,13 @@ public class ProfilePageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish();
             }
-
-    });}
+    });
+        Button logoutBtn=findViewById(R.id.logout);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseUtils.logout(ProfilePageActivity.this);
+            }
+        });
+    }
 }
