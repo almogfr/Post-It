@@ -1,7 +1,6 @@
 package com.example.postit;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -156,8 +155,13 @@ public class FirebaseUtils {
         return null;
     }
 
-    public static void logout() {
+    public static void logout(Activity context) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
+        Intent intent
+                = new Intent(context,
+                LoginActivity.class);
+        context.startActivity(intent);
+        context.finish();
     }
 }
