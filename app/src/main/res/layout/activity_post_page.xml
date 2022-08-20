@@ -17,7 +17,7 @@
     android:paddingTop="8dp">
 
     <!-- Article Header -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/article_item_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#bbb"
             android:textSize="12sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- Article Content -->
     <LinearLayout
