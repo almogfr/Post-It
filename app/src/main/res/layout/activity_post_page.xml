@@ -17,7 +17,7 @@
     android:paddingTop="8dp">
 
     <!-- Article Header -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/article_item_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,30 +53,20 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#bbb"
             android:textSize="12sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- Article Content -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/article_item_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/article_item_header">
-
-        <TextView
-            android:id="@+id/article_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="Lorem ipsum dolor sit amet, nam putant splendide an, ei modus facete nam. Instructior interpretaris in pri. Modus veniam ea mel, nisl blandit vel in."
-            android:textColor="#777"
-            android:textSize="14dp" />
+        android:layout_width="370dp"
+        android:layout_height="190dp"
+        android:layout_below="@+id/article_item_header"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/article_image"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/article_text"
             android:adjustViewBounds="true"
             android:paddingLeft="4dp"
             android:paddingTop="8dp"
@@ -84,18 +74,19 @@
             android:paddingBottom="6dp"
             android:scaleType="fitXY"
             android:src="@drawable/field_short"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/videoLayout"
-            android:layout_below="@+id/article_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="6dp"
+            android:layout_below="@+id/article_image"
             android:paddingLeft="4dp"
-            android:paddingRight="4dp"
             android:paddingTop="8dp"
-            android:visibility="visible">
+            android:paddingRight="4dp"
+            android:paddingBottom="6dp"
+            android:visibility="gone"
+            android:orientation="horizontal">
 
             <!-- Video thumbnail -->
             <ImageView
@@ -112,45 +103,33 @@
                 android:id="@+id/article_video_play_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/youtube"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/youtube"
                 android:visibility="visible" />
-        </RelativeLayout>
+        </LinearLayout>
 
-
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- Article Details -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/article_item_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/article_item_content"
-        android:layout_marginBottom="2dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginTop="2dp"
-        android:paddingBottom="6dp"
-        android:paddingTop="2dp">
+        android:layout_marginBottom="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="6dp">
 
         <TextView
             android:id="@+id/article_likes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="12 likes"
-            android:textColor="#bbb"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/article_likes"
-            android:layout_toRightOf="@+id/article_likes"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text=" · "
             android:textColor="#bbb"
             android:textSize="13sp" />
 
@@ -158,41 +137,46 @@
             android:id="@+id/article_comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_toEndOf="@+id/sp"
             android:layout_toRightOf="@+id/sp"
             android:text="10 comments"
             android:textColor="#bbb"
             android:textSize="13sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- Article Buttons -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/article_item_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/article_item_details"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginTop="4dp">
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonLike"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
-            android:background="#2980B9"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_outline_thumb_up_24"
             android:text="Like" />
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonComment"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/buttonLike"
             android:layout_toRightOf="@+id/buttonLike"
-            android:background="#2980B9"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_baseline_comment_24"
             android:text="Comment" />
 
         <ProgressBar
@@ -200,13 +184,13 @@
             style="?android:attr/progressBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/buttonLike"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="8dp"
             android:indeterminate="false"
             android:visibility="gone" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -7,14 +7,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SettingsActivity extends AppCompatActivity {
+public class CreatePostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_create_post);
 
         ImageButton profile = findViewById(R.id.ProfileButton);
-        profile.setVisibility(View.VISIBLE);
+        profile.setVisibility(View.INVISIBLE);
 
         TextView profileText = findViewById(R.id.settingsText);
         profileText.setVisibility(View.VISIBLE);
