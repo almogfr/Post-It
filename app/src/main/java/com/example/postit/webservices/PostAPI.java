@@ -27,7 +27,7 @@ public class PostAPI
         this.dao = dao;
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                .baseUrl(MyApplication.context.getString(R.string.PostsUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

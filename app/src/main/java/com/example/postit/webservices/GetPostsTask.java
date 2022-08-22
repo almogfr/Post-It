@@ -1,6 +1,7 @@
 package com.example.postit.webservices;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -9,14 +10,19 @@ import com.example.postit.R;
 import com.example.postit.data.PostDao;
 import com.example.postit.entities.Post;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GetPostsTask extends AsyncTask<Void, Void, Void>
@@ -37,7 +43,7 @@ public class GetPostsTask extends AsyncTask<Void, Void, Void>
         URL url;
         HttpURLConnection urlConnection = null;
         try {
-            url = new URL(MyApplication.context.getString(R.string.PostsUrl));
+            url = new URL(MyApplication.context.getString(R.string.PostsUrl)+"Post?key="+R.string.api_key);
             urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = urlConnection.getInputStream();
 
@@ -48,13 +54,19 @@ public class GetPostsTask extends AsyncTask<Void, Void, Void>
             }
 
             dao.clear();
+            String temp = result.toString();
+            Gson gson = new Gson();
+//            JsonObject t = gson.fromJson(temp, JsonObject .class);
+            JSONObject t = new JSONObject(temp);
+//            JSONArray posts = t.getJSONArray("documents");
+//            JSONArray posts = new JSONArray(result.toString());
+            ArrayList<Post> posts = parse(temp);
 
-            JSONArray posts = new JSONArray(result.toString());
-
-            for (int i = 0; i < posts.length(); i++) {
-                Post post = new Gson().fromJson(String.valueOf(posts.getJSONObject(i)), Post.class);
-                post.setImgUrl("R.drawable.ic_baseline_account_circle_24");
-                dao.insert(post);
+            for (int i = 0; i < posts.size(); i++) {
+//                JSONObject js = posts.getJSONObject(i).getJSONObject("fields");
+//                Post post = new Gson().fromJson(String.valueOf(js), Post.class);
+//                post.setImgUrl("R.drawable.ic_baseline_account_circle_24");
+                dao.insert(posts.get(i));
             }
 
             postListData.postValue(dao.get());
@@ -69,5 +81,44 @@ public class GetPostsTask extends AsyncTask<Void, Void, Void>
 
 
         return null;
+    }
+
+    public ArrayList<Post> parse(String json)
+    {
+        ArrayList<Post> list = new ArrayList<Post>();
+        try {
+            JSONObject object = new JSONObject(json);
+            JSONArray doc = object.getJSONArray("documents");
+            for (int j = 0; j < doc.length(); j++) {
+                Post post = new Post(null, null, null, null, null, null, 0);
+                JSONObject jObject = doc.getJSONObject(j);
+                JSONObject fields = jObject.getJSONObject("fields");
+                if (fields.has("name") && fields.getJSONObject("name").has("stringValue")) {
+                    post.setName(fields.getJSONObject("name").getString("stringValue"));
+                }
+                if (fields.has("profileImage") && fields.getJSONObject("profileImage").has("stringValue")) {
+                    post.setProfileImage(fields.getJSONObject("profileImage").getString("stringValue"));
+                }
+                if (fields.has("whenPosted") && fields.getJSONObject("whenPosted").has("stringValue")) {
+                    post.setWhenPosted(fields.getJSONObject("whenPosted").getString("stringValue"));
+                }
+                if (fields.has("imgUrl") && fields.getJSONObject("imgUrl").has("stringValue")) {
+                    post.setImgUrl(fields.getJSONObject("imgUrl").getString("stringValue"));
+                }
+                if (fields.has("likes") && fields.getJSONObject("likes").has("integerValue")) {
+                    post.setLikes(fields.getJSONObject("likes").getInt("integerValue"));
+                }
+                if (fields.has("id") && fields.getJSONObject("id").has("stringValue")) {
+                    post.setId(fields.getJSONObject("id").getString("stringValue"));
+                }
+                list.add(post);
+            }
+
+        }
+        catch(JSONException e)
+        {
+            //something
+        }
+        return list;
     }
 }

@@ -16,7 +16,8 @@
     <string name="share">Share</string>
 
     <string name="DbName">PostsDB</string>
-    <string name="PostsUrl">https://postit-cfab0.firebaseio.com/posts/</string>
+    <string name="PostsUrl">https://firestore.googleapis.com/v1/projects/postit-cfab0/databases/(default)/documents/</string>
+    <string name="api_key">AIzaSyAt44mfkn_nYds5amtsOdKAIimq_iGUIX0</string>
     <string name="BaseUrl">http://10.0.2.2:5001/api/</string>
 
     //Headers Onboarding

@@ -1,13 +1,17 @@
 package com.example.postit.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.UUID;
 
 
 @Entity
 public class Post {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @NonNull
+    private String id = UUID.randomUUID().toString();
     private String name;
     private String whenPosted;
     private String profileImage;
@@ -15,17 +19,17 @@ public class Post {
     private int likes;
     private String user_id;
 
-    public Post(String name, String whenPosted, String profileImage, String imgUrl, String user_id) {
+    public Post(String id, String name, String whenPosted, String profileImage, String imgUrl, String user_id, int likes) {
+        this.id = id;
         this.name = name;
         this.whenPosted = whenPosted;
         this.profileImage = profileImage;
         this.imgUrl = imgUrl;
         this.user_id = user_id;
+        this.likes = likes;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(String id) { this.id = id; }
 
     public void setWhenPosted(String whenPosted) {
         this.whenPosted = whenPosted;
@@ -51,7 +55,7 @@ public class Post {
         this.likes = likes;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
