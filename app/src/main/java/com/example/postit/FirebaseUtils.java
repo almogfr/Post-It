@@ -155,6 +155,14 @@ public class FirebaseUtils {
         return null;
     }
 
+    public static String getCurrentemail() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if(isSignedIn()){
+            return mAuth.getCurrentUser().getEmail();
+        }
+        return null;
+    }
+
     public static void logout(Activity context) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
@@ -164,4 +172,5 @@ public class FirebaseUtils {
         context.startActivity(intent);
         context.finish();
     }
+
 }
