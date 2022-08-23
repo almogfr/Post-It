@@ -7,17 +7,19 @@
         <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.174" />
         <entry key="app/src/main/res/drawable/ic_outline_account_circle_24.xml" value="0.174" />
         <entry key="app/src/main/res/drawable/top_button_background.xml" value="0.325" />
+        <entry key="app/src/main/res/layout-sw600dp/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_create_post.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_image_clicked.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2318840579710145" />
+        <entry key="app/src/main/res/layout/activity_maps.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_onboarding.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_onboarding_mainscreen.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/layout/activity_onboarding_slider_layout.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_post_page.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.19583333333333333" />
-        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.20989583333333334" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.1" />
         <entry key="app/src/main/res/layout/feed_post_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/image_card.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/onboarding_slider_layout.xml" value="0.19583333333333333" />
