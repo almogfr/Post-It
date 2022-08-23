@@ -3,6 +3,11 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_address">Address</string>
+    <string name="prompt_mobile">Mobile Number</string>
+    <string name="prompt_firstname">First Name</string>
+    <string name="prompt_lastname">Last Name</string>
+    <string name="prompt_dateofbirth">Date Of Birth</string>
     <string name="action_register">Register</string>
     <string name="action_register_title">Registration</string>
     <string name="action_register_from_sign_in">click here to register</string>
