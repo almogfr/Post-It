@@ -19,6 +19,7 @@ public class Post {
     private int likes;
     private String user_id;
 
+    public Post(){}
     public Post(String id, String name, String whenPosted, String profileImage, String imgUrl, String user_id, int likes) {
         this.id = id;
         this.name = name;

@@ -6,6 +6,8 @@ import com.example.postit.MyApplication;
 import com.example.postit.R;
 import com.example.postit.data.PostDao;
 import com.example.postit.entities.Post;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class PostAPI
     private MutableLiveData<List<Post>> postListData;
     private PostDao dao;
     RetrofitAPI retrofitAPI;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public PostAPI(MutableLiveData<List<Post>> postListData, PostDao dao) {
         this.postListData = postListData;
@@ -68,22 +71,23 @@ public class PostAPI
 
     public void get()
     {
-        Call<List<Post>> call = retrofitAPI.getPosts();
-
-        call.enqueue(new Callback<List<Post>>() {
-            @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-
-                new Thread(() -> {
-                    dao.clear();
-                    dao.insertList(response.body());
-                    postListData.postValue(dao.get());
-                }).start();
-            }
-
-            @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {}
-        });
+        DocumentReference user_doc_ref = db.collection("Post").document();
+//        Call<List<Post>> call = retrofitAPI.getPosts();
+//
+//        call.enqueue(new Callback<List<Post>>() {
+//            @Override
+//            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+//
+//                new Thread(() -> {
+//                    dao.clear();
+//                    dao.insertList(response.body());
+//                    postListData.postValue(dao.get());
+//                }).start();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Post>> call, Throwable t) {}
+//        });
     }
 
 
