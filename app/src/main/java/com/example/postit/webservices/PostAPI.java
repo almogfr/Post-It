@@ -39,18 +39,22 @@ public class PostAPI
 
     public void add(Post post)
     {
-        dao.insert(post);
-        postListData.postValue(dao.get());
+        new Thread(() -> {
+            dao.insert(post);
+            postListData.postValue(dao.get());
 
-        Call<Void> call = retrofitAPI.createPost(post);
+            new AddPostsTask(postListData, dao, post).execute();
+        }).start();
 
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {}
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {}
-        });
+//        Call<Void> call = retrofitAPI.createPost(post);
+//
+//        call.enqueue(new Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {}
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {}
+//        });
     }
 
     public void delete(Post post)
@@ -71,7 +75,7 @@ public class PostAPI
 
     public void get()
     {
-        DocumentReference user_doc_ref = db.collection("Post").document();
+        new GetPostsTask(postListData, dao).execute();
 //        Call<List<Post>> call = retrofitAPI.getPosts();
 //
 //        call.enqueue(new Callback<List<Post>>() {

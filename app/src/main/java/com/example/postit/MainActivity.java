@@ -49,6 +49,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         viewModel = new ViewModelProvider(this).get(PostsViewModel.class);
+//        viewModel.add(new Post(UUID.randomUUID().toString(), "almog", "11111", "https://firebasestorage.googleapis.com/v0/b/postit-cfab0.appspot.com/o/dkQj8uq7Bug061psB4fuWg9PksS2%2F1657404674448?alt=media&token=2ddd1cc5-abd1-4b69-bcab-7031a20443cc", "https://firebasestorage.googleapis.com/v0/b/postit-cfab0.appspot.com/o/dkQj8uq7Bug061psB4fuWg9PksS2%2F1657404674448?alt=media&token=2ddd1cc5-abd1-4b69-bcab-7031a20443cc", "321231231", 0));
         RecyclerView lstFeed = (RecyclerView) findViewById(R.id.lstFeed);
 
 //        posts = generatePosts();

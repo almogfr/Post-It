@@ -80,8 +80,7 @@ public class PostsRepository {
     }
 
     public void reload() {
-//        api.get();
-        new GetPostsTask(postListData, dao).execute();
+        api.get();
     }
 
 }
