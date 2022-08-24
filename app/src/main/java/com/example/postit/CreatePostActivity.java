@@ -96,7 +96,7 @@ public class CreatePostActivity extends AppCompatActivity {
                     else {
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
                         uploadImageToFirebase();
-                        viewModel.add(new Post(UUID.randomUUID().toString(), FirebaseUtils.getCurrentUser().getDisplayName(), comment_text.getText().toString(), simpleDateFormat.format(Calendar.getInstance().getTime()), ImageFireBaseURL, ImageFireBaseURL, FirebaseUtils.getCurrentUserid(), 0));
+                        viewModel.add(new Post(UUID.randomUUID().toString(), FirebaseUtils.getCurrentUser().getEmail(), comment_text.getText().toString(), simpleDateFormat.format(Calendar.getInstance().getTime()), ImageFireBaseURL, ImageFireBaseURL, FirebaseUtils.getCurrentUserid(), 0));
                         finish();
                     }
                 }
