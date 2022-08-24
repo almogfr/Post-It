@@ -47,7 +47,6 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/feed_post_profile_img" />
@@ -64,51 +63,4 @@
         app:layout_constraintTop_toTopOf="@+id/feed_post_img"
         app:layout_constraintBottom_toBottomOf="@+id/feed_post_img"/>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_outline_thumb_up_24"
-            android:focusable="false"
-            android:padding="5dp"
-            android:text="@string/like" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_comment_24"
-            android:focusable="false"
-            android:padding="5dp"
-            android:text="@string/comment" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_share_24"
-            android:focusable="false"
-            android:padding="5dp"
-            android:text="@string/share" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
