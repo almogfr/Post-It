@@ -4,11 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 
 @Entity
-public class Post {
+public class Post implements Serializable {
     @PrimaryKey
     @NonNull
     private String id = UUID.randomUUID().toString();
