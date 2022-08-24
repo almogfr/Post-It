@@ -38,4 +38,6 @@
     <string name="desc_fourth">Add comments and likes to post you love</string>
     <string name="title_activity_maps">MapsActivity</string>
 
+    <string name="select_photo">Please select photo first</string>
+
 </resources>

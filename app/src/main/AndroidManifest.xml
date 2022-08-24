@@ -78,6 +78,9 @@
         <activity
             android:name=".SettingsActivity"
             android:label="" />
+        <activity
+            android:name=".CreatePostActivity"
+            android:label="" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

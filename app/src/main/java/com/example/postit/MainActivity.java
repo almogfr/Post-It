@@ -151,47 +151,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    private List<Post> generatePosts() {
-//        List<Post> posts = new ArrayList<>();
-//        storageReference.listAll()
-//                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
-//                    @Override
-//                    public void onSuccess(ListResult listResult) {
-//                        for (StorageReference file : listResult.getItems()) {
-//                            file.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                @Override
-//                                public void onSuccess(Uri uri) {
-//                                    // adding the url in the arraylist
-//                                    String url = uri.toString();
-//                                    Images.add(url);
-//                                    Post post = new Post("test", "now", url, url, FirebaseUtils.getCurrentUserid());
-//                                    posts.add(post);
-//                                    AsyncTask.execute(() -> viewModel.add(post));
-//                                    feedAdapter.notifyDataSetChanged();
-//                                    Log.e("Itemvalue", uri.toString());
-//                                }
-//                            }).addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                @Override
-//                                public void onSuccess(Uri uri) {
-////                                    recyclerView.setAdapter(customAdapter);
-//                                    progressBar.setVisibility(View.GONE);
-//                                }
-//                            });
-//                        }
-//                    }
-//                });
-//        return posts;
-//    }
-
     private void selectImage() {
-        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        final CharSequence[] options = {"Post It with image", "Post It with video", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Upload Post");
         builder.setItems(options, (dialog, item) -> {
-            if (options[item].equals("Take Photo")) {
-                openCam();
+            if (options[item].equals("Post It with image")) {
+//                openCam();
+                Intent intent = new Intent(MainActivity.this, CreatePostActivity.class);
+                startActivity(intent);
             }
-            else if (options[item].equals("Choose from Gallery")) {
+            else if (options[item].equals("Post It with video")) {
                 openGallery();
             }
             else if (options[item].equals("Cancel")) {

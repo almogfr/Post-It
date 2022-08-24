@@ -147,6 +147,14 @@ public class FirebaseUtils {
         return (currentUser != null);
     }
 
+    public static FirebaseUser getCurrentUser() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if(isSignedIn()){
+            return mAuth.getCurrentUser();
+        }
+        return null;
+    }
+
     public static String getCurrentUserid() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         if(isSignedIn()){
