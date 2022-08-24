@@ -19,11 +19,13 @@ public class Post implements Serializable {
     private String imgUrl;
     private int likes;
     private String user_id;
+    private String text;
 
     public Post(){}
-    public Post(String id, String name, String whenPosted, String profileImage, String imgUrl, String user_id, int likes) {
+    public Post(String id, String name, String text, String whenPosted, String profileImage, String imgUrl, String user_id, int likes) {
         this.id = id;
         this.name = name;
+        this.text = text;
         this.whenPosted = whenPosted;
         this.profileImage = profileImage;
         this.imgUrl = imgUrl;
@@ -32,6 +34,10 @@ public class Post implements Serializable {
     }
 
     public void setId(String id) { this.id = id; }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public void setWhenPosted(String whenPosted) {
         this.whenPosted = whenPosted;
@@ -63,6 +69,10 @@ public class Post implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getText(){
+        return text;
     }
 
     public String getWhenPosted() {

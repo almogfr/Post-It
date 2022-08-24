@@ -15,6 +15,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class FirebaseUtils {
     public static void FirebaseRegister(String email, String password, ProgressBar progressbar, Activity context){
@@ -161,6 +163,12 @@ public class FirebaseUtils {
             return mAuth.getCurrentUser().getUid();
         }
         return null;
+    }
+
+    public static StorageReference getStorageRef(){
+        FirebaseStorage storage  = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        return storageRef;
     }
 
     public static String getCurrentemail() {

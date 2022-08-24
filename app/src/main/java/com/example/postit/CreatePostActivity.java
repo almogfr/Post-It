@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,7 +54,6 @@ public class CreatePostActivity extends AppCompatActivity {
     private Bitmap photo;
     private Button postButton;
     private ImageView imgToUplaod;
-    private PostsRepository mRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +81,9 @@ public class CreatePostActivity extends AppCompatActivity {
                 }
 
             });
+
+            EditText comment_text = findViewById(R.id.comment_text);
+
             PostsViewModel viewModel = new ViewModelProvider(this).get(PostsViewModel.class);
             postButton = findViewById(R.id.btn_postit);
 //            postButton.setEnabled(false);
@@ -93,8 +96,8 @@ public class CreatePostActivity extends AppCompatActivity {
                     else {
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
                         uploadImageToFirebase();
-                        viewModel.add(new Post(UUID.randomUUID().toString(), FirebaseUtils.getCurrentUser().getDisplayName(), simpleDateFormat.format(Calendar.getInstance().getTime()), ImageFireBaseURL, ImageFireBaseURL, FirebaseUtils.getCurrentUserid(), 0));
-
+                        viewModel.add(new Post(UUID.randomUUID().toString(), FirebaseUtils.getCurrentUser().getDisplayName(), comment_text.getText().toString(), simpleDateFormat.format(Calendar.getInstance().getTime()), ImageFireBaseURL, ImageFireBaseURL, FirebaseUtils.getCurrentUserid(), 0));
+                        finish();
                     }
                 }
             });
