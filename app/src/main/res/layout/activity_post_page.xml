@@ -125,7 +125,7 @@
         android:paddingBottom="6dp">
 
         <TextView
-            android:id="@+id/article_likes"
+            android:id="@+id/article_likess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
