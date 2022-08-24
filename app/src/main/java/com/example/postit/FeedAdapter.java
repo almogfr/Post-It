@@ -1,13 +1,13 @@
 package com.example.postit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +16,7 @@ import com.example.postit.entities.Post;
 
 import java.util.List;
 
-public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder> {
-
+public class FeedAdapter extends RecyclerView.Adapter <FeedAdapter.PostViewHolder> {
 
     class PostViewHolder extends RecyclerView.ViewHolder {
         TextView name;
@@ -25,6 +24,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder
         ImageView profile;
         ImageView img;
         ProgressBar progress;
+        int likes;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -37,6 +37,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder
     }
 
     List<Post> posts;
+
     private final LayoutInflater mInflater;
 
     public FeedAdapter(Context context) {
@@ -58,6 +59,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.PostViewHolder
             holder.when.setText(current.getWhenPosted());
             new ImageDownloader(current.getProfileImage(), holder.profile).execute();
             new ImageDownloader(current.getImgUrl(), holder.img, holder.progress).execute();
+            holder.img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent mIntent = new Intent(v.getContext(), ImageClickedActivity.class);
+                    mIntent.putExtra("UniqueKey", current);
+                    v.getContext().startActivity(mIntent);
+                }
+            });
         }
     }
 
