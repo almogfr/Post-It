@@ -19,6 +19,7 @@
     <string name="comment">Comment</string>
     <string name="like">Like</string>
     <string name="share">Share</string>
+    <string name="delete">Delete</string>
 
     <string name="DbName">PostsDB</string>
     <string name="PostsUrl">https://firestore.googleapis.com/v1/projects/postit-cfab0/databases/(default)/documents/</string>

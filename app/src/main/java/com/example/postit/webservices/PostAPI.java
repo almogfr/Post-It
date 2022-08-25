@@ -49,18 +49,12 @@ public class PostAPI
 
     public void delete(Post post)
     {
-        dao.delete(post);
-        postListData.postValue(dao.get());
+        new Thread(() -> {
+            dao.delete(post);
+            postListData.postValue(dao.get());
 
-        Call<Void> call = retrofitAPI.deletePost(post.getId());
-
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {}
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {}
-        });
+            new DeletePostsTask(postListData, dao, post).execute();
+        }).start();
     }
 
     public void get()
