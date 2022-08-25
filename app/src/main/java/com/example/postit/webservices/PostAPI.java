@@ -19,22 +19,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PostAPI
 {
-    Retrofit retrofit;
     private MutableLiveData<List<Post>> postListData;
     private PostDao dao;
-    RetrofitAPI retrofitAPI;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public PostAPI(MutableLiveData<List<Post>> postListData, PostDao dao) {
         this.postListData = postListData;
         this.dao = dao;
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.PostsUrl))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        retrofitAPI = retrofit.create(RetrofitAPI.class);
     }
 
     public void add(Post post)

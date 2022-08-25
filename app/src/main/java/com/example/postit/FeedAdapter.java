@@ -3,6 +3,7 @@ package com.example.postit;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,11 @@ import com.bumptech.glide.request.target.Target;
 import com.example.postit.entities.Post;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class FeedAdapter extends RecyclerView.Adapter <FeedAdapter.PostViewHolder> {
@@ -102,6 +108,23 @@ public class FeedAdapter extends RecyclerView.Adapter <FeedAdapter.PostViewHolde
 
     public void setPosts(List<Post> s) {
         posts = s;
+        Collections.sort(posts, (p1, p2) -> {
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
+            Date d1 = null;
+            Date d2 = null;
+            try {
+                d1 = simpleDateFormat.parse(p1.getWhenPosted());
+                d2 = simpleDateFormat.parse(p2.getWhenPosted());
+            } catch (ParseException ex) {
+                Log.v("Exception", ex.getLocalizedMessage());
+            }
+
+            long Date = d1.getDate();
+            long Date1 = d2.getDate();
+
+            return d2.compareTo(d1);
+        });
         notifyDataSetChanged();
     }
 
