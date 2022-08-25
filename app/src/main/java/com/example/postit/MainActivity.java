@@ -50,16 +50,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    private static final int CAMERA_REQUEST = 1;
-    private static final int MY_CAMERA_PERMISSION_CODE = 100;
     private String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private ArrayList<String> Images = new ArrayList<>();
-    private ProgressBar progressBar;
-    private List<Post> posts;
     private StorageReference storageReference;
     private DatabaseReference url;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private Uri mImageUri;
     private FeedAdapter feedAdapter;
     private PostsViewModel viewModel;
 
@@ -69,15 +64,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         super.onCreate(savedInstanceState);
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences sharedPreferences = getSharedPreferences("myfile", MODE_PRIVATE);
         if (!sharedPreferences.getBoolean("OnboardingFinishFlag", false)) {
             Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
             startActivity(intent);
         }
         setContentView(R.layout.activity_main);
-//        progressBar = findViewById(R.id.progress);
-//        progressBar.setVisibility(View.VISIBLE);
 
         ImageButton image = findViewById(R.id.BackButton);
         image.setVisibility(View.GONE);
@@ -92,10 +84,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         viewModel = new ViewModelProvider(this).get(PostsViewModel.class);
-//        viewModel.add(new Post(UUID.randomUUID().toString(), "almog", "11111", "https://firebasestorage.googleapis.com/v0/b/postit-cfab0.appspot.com/o/dkQj8uq7Bug061psB4fuWg9PksS2%2F1657404674448?alt=media&token=2ddd1cc5-abd1-4b69-bcab-7031a20443cc", "https://firebasestorage.googleapis.com/v0/b/postit-cfab0.appspot.com/o/dkQj8uq7Bug061psB4fuWg9PksS2%2F1657404674448?alt=media&token=2ddd1cc5-abd1-4b69-bcab-7031a20443cc", "321231231", 0));
         RecyclerView lstFeed = (RecyclerView) findViewById(R.id.lstFeed);
 
-//        posts = generatePosts();
         feedAdapter = new FeedAdapter(this);
         lstFeed.setAdapter(feedAdapter);
         lstFeed.setLayoutManager(new LinearLayoutManager(this));
@@ -105,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectImage();
+                Intent intent = new Intent(MainActivity.this, CreatePostActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -136,30 +127,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private void selectImage() {
-        final CharSequence[] options = {"Post It with image", "Post It with video", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Upload Post");
-        builder.setItems(options, (dialog, item) -> {
-            if (options[item].equals("Post It with image")) {
-//                openCam();
-                Intent intent = new Intent(MainActivity.this, CreatePostActivity.class);
-                startActivity(intent);
-            }
-            else if (options[item].equals("Post It with video")) {
-                openGallery();
-            }
-            else if (options[item].equals("Cancel")) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
-    }
-
-    private void openGallery(){
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 1);
     }
 }

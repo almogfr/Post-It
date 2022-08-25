@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.postit.entities.Post;
 
 import java.io.Serializable;
@@ -24,29 +25,35 @@ public class ImageClickedActivity extends AppCompatActivity implements Serializa
         setContentView(R.layout.activity_image_clicked);
 
         Intent mIntent = getIntent();
-        Post postItems = (Post) mIntent.getSerializableExtra("UniqueKey");
+        Post postItem = (Post) mIntent.getSerializableExtra("UniqueKey");
 
         TextView postName = findViewById(R.id.feed_post_name);
         TextView postWhen = findViewById(R.id.feed_post_when);
         ImageView feedPostProfileImg = findViewById(R.id.feed_post_profile_img);
         ImageView feedPostImg = findViewById(R.id.feed_post_img);
         TextView postLikes = findViewById(R.id.post_likes);
+        TextView text = findViewById(R.id.comment_text);
 
-        postName.setText(postItems.getName());
-        postWhen.setText(postItems.getWhenPosted());
-        new ImageDownloader(postItems.getProfileImage(), feedPostProfileImg).execute();
-        new ImageDownloader(postItems.getImgUrl(), feedPostImg).execute();
-//        postLikes.setText(postItems.getLikes());
+        postName.setText(postItem.getName());
+        postWhen.setText(postItem.getWhenPosted());
+        text.setText(postItem.getText());
+        Glide.with(getApplicationContext())
+                .load(FirebaseUtils.getStorageRef().child(postItem.getProfileImage()))
+                .into(feedPostProfileImg);
+        Glide.with(getApplicationContext())
+                .load(FirebaseUtils.getStorageRef().child(postItem.getImgUrl()))
+                .into(feedPostImg);
+        postLikes.setText(postItem.getLikes() + " Likes");
 
-        ImageButton prfilePageButton = (ImageButton) findViewById(R.id.ProfileButton);
-        prfilePageButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton profilePageButton = findViewById(R.id.ProfileButton);
+        profilePageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ImageClickedActivity.this, ProfilePageActivity.class);
                 startActivity(intent);
             }
         });
-        ImageButton BackButton = (ImageButton) findViewById(R.id.BackButton);
+        ImageButton BackButton = findViewById(R.id.BackButton);
         BackButton.setOnClickListener(view -> finish());
     }
 }

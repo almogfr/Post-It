@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -129,7 +131,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
     private void openGallery(){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, GALLERY_REQUEST);
     }
 
     private void openCam(){
@@ -149,7 +151,7 @@ public class CreatePostActivity extends AppCompatActivity {
             takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
             try {
-                startActivityForResult(takePictureIntent, 1);
+                startActivityForResult(takePictureIntent, CAMERA_REQUEST);
             } catch (ActivityNotFoundException e) {
                 // display error state to the user
             }
@@ -163,8 +165,6 @@ public class CreatePostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-//            File file = new File(Environment.getExternalStorageDirectory() + File.separator + "image.jpg");
-//            Bitmap photo = (Bitmap) data.getExtras().get("data");
             photo = null;
             try {
                 photo = MediaStore.Images.Media.getBitmap(getContentResolver(), mImageUri);
@@ -187,8 +187,19 @@ public class CreatePostActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 imgToUplaod.setImageBitmap(photo);
-//                postButton.setEnabled(true);
             }
+        }
+        else if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            String[] filePath = { MediaStore.Images.Media.DATA };
+            Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
+            c.moveToFirst();
+            int columnIndex = c.getColumnIndex(filePath[0]);
+            String picturePath = c.getString(columnIndex);
+            c.close();
+            photo = (BitmapFactory.decodeFile(picturePath));
+            Log.w("path of image from gallery......******************.........", picturePath+"");
+            imgToUplaod.setImageBitmap(photo);
         }
     }
 

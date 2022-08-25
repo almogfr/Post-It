@@ -29,6 +29,7 @@ public class FeedAdapter extends RecyclerView.Adapter <FeedAdapter.PostViewHolde
     class PostViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView when;
+        TextView text;
         ImageView profile;
         ImageView img;
         ProgressBar progress;
@@ -40,6 +41,7 @@ public class FeedAdapter extends RecyclerView.Adapter <FeedAdapter.PostViewHolde
             when = itemView.findViewById(R.id.feed_post_when);
             profile = itemView.findViewById(R.id.feed_post_profile_img);
             img = itemView.findViewById(R.id.feed_post_img);
+            text = itemView.findViewById(R.id.comment_text);
             progress = itemView.findViewById(R.id.progress);
         }
     }
@@ -67,6 +69,7 @@ public class FeedAdapter extends RecyclerView.Adapter <FeedAdapter.PostViewHolde
             final Post current = posts.get(position);
             holder.name.setText(current.getName());
             holder.when.setText(current.getWhenPosted());
+            holder.text.setText(current.getText());
             Glide.with(mContext)
                     .load(FirebaseUtils.getStorageRef().child(current.getProfileImage()))
                     .into(holder.profile);
@@ -118,11 +121,6 @@ public class FeedAdapter extends RecyclerView.Adapter <FeedAdapter.PostViewHolde
         if (posts != null)
             return posts.size();
         return 0;
-    }
-
-    public List<Post> getPosts() {
-
-        return posts;
     }
 
 }
